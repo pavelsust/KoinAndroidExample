@@ -14,9 +14,9 @@ class MainViewModel(
     private val networkHelper: NetworkHelper
 ) : ViewModel(){
     private val _movieListResponse = MutableLiveData<Resource<MovieResponse>>()
-    private val movieListResponse get() = _movieListResponse
+    val movieListResponse get() = _movieListResponse
 
-    private fun fetchMovie(token :String , page:Int){
+     fun fetchMovie(token :String , page:Int){
         viewModelScope.launch {
             _movieListResponse.postValue(Resource.loading(null))
             if (networkHelper.isNetworkConnected()){
