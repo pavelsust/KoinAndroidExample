@@ -1,10 +1,11 @@
 package com.rockstreamer.koinandroidexample.data.api
 
-import com.rockstreamer.koinandroidexample.data.model.User
+import com.rockstreamer.koinandroidexample.data.model.MovieResponse
 import retrofit2.Response
 
-class ApiHelperImpl (val apiService: ApiService): ApiHelper {
-    override suspend fun getUsers(): Response<List<User>> {
-        return apiService.getUsers()
+class ApiHelperImpl (private val apiService: ApiService): ApiHelper {
+
+    override suspend fun getMovieList(token: String, page: Int): Response<MovieResponse> {
+        return apiService.getMovieList(token , page)
     }
 }
