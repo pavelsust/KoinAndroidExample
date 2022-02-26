@@ -7,6 +7,8 @@ import com.rockstreamer.koinandroidexample.data.model.MovieResponse
 import com.rockstreamer.koinandroidexample.data.repository.MainRepository
 import com.rockstreamer.koinandroidexample.utils.NetworkHelper
 import com.rockstreamer.koinandroidexample.utils.Resource
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -16,16 +18,25 @@ class MainViewModel(
     private val _movieListResponse = MutableLiveData<Resource<MovieResponse>>()
     val movieListResponse get() = _movieListResponse
 
-     fun fetchMovie(token :String , page:Int){
+    init {
+        fetchMovie("e4c41ae3e8578a454aa7575f144a0f14" , 1)
+    }
+
+
+     private fun fetchMovie(token :String, page:Int){
         viewModelScope.launch {
-            _movieListResponse.postValue(Resource.loading(null))
-            if (networkHelper.isNetworkConnected()){
-                mainRepository.getMovieList(token , 1).let {
-                    if (it.isSuccessful){
-                        _movieListResponse.postValue(Resource.success(it.body()))
-                    } else _movieListResponse.postValue(Resource.error(it.errorBody().toString(), null))
-                }
-            } else _movieListResponse.postValue(Resource.error("No Internet connection", null))
+
         }
+
+         GlobalScope.launch {
+             _movieListResponse.postValue(Resource.loading(null))
+             if (networkHelper.isNetworkConnected()){
+                 mainRepository.getMovieList(token , 1).let {
+                     if (it.isSuccessful){
+                         _movieListResponse.postValue(Resource.success(it.body()))
+                     } else _movieListResponse.postValue(Resource.error(it.errorBody().toString(), null))
+                 }
+             } else _movieListResponse.postValue(Resource.error("No Internet connection", null))
+         }
     }
 }

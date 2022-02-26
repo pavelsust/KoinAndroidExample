@@ -11,5 +11,4 @@ interface ApiService {
     suspend fun getMovieList(
         @Query("api_key") apiKey: String ,
         @Query("page") page: Int): Response<MovieResponse>
-
 }

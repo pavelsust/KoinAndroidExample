@@ -47,7 +47,7 @@ class FirstFragment : Fragment(), MainAdapter.OnClickCallback {
         adapter = MainAdapter(this)
         binding.recycleview.adapter = adapter
 
-        mainViewModel.fetchMovie("e4c41ae3e8578a454aa7575f144a0f14" , 1)
+        //mainViewModel.fetchMovie("e4c41ae3e8578a454aa7575f144a0f14" , 1)
         mainViewModel.movieListResponse.observe(viewLifecycleOwner){
             when(it.status){
                 Status.LOADING ->{
