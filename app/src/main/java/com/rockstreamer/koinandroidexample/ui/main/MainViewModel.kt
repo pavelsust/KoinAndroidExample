@@ -23,15 +23,11 @@ class MainViewModel(
     }
 
 
-     private fun fetchMovie(token :String, page:Int){
-        viewModelScope.launch {
-
-        }
-
+    fun fetchMovie(token :String, page:Int){
          GlobalScope.launch {
              _movieListResponse.postValue(Resource.loading(null))
              if (networkHelper.isNetworkConnected()){
-                 mainRepository.getMovieList(token , 1).let {
+                 mainRepository.getMovieList(token , page).let {
                      if (it.isSuccessful){
                          _movieListResponse.postValue(Resource.success(it.body()))
                      } else _movieListResponse.postValue(Resource.error(it.errorBody().toString(), null))
