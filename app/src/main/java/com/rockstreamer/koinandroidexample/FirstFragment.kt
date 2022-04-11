@@ -2,6 +2,7 @@ package com.rockstreamer.koinandroidexample
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-
 
 class FirstFragment : Fragment(), MainAdapter.OnClickCallback {
 
@@ -52,6 +52,26 @@ class FirstFragment : Fragment(), MainAdapter.OnClickCallback {
         adapter = MainAdapter(this)
         binding.recycleview.adapter = adapter
 
+
+        /**
+         *
+         *  I can save saved instance State
+         *  to check is it null or not
+         *  if null = data accress from the api
+         *  if not null = data access from the viewmodel list
+         *
+         */
+
+
+        if (savedInstanceState == null){
+            Log.d("STATE" , "Null")
+        } else {
+            Log.d("STATE" , "Not Null")
+        }
+
+        mainViewModel.mutableMovieList.observe(viewLifecycleOwner){
+            Log.d("STATE" , "${it.size}")
+        }
 
         mainViewModel.movieListResponse.observe(viewLifecycleOwner){
             when(it.status){
